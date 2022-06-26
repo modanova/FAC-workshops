@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn Fetch & Promises</title>
+  </head>
+  <body>
+    <h1>Open the console</h1>
+    <script>
+      const getRepos = (user) => {
+        return user.repos_url;        
+      }
+
+      const getUser = (username) => {
+        return fetch(`https://api.github.com/users/${username}`)
+            .then((response)=>response.json())
+            .then((user)=>getRepos(user))
+            .catch((error) => console.log(error));
+    }
+        // getUser("modanova")
+        //   .then((user) => console.log(user))
+        //   .catch((error) => console.log(error));
+
+      getUser("modanova")
+        .then(console.log);
+
+
+    </script>
+  </body>
+</html>

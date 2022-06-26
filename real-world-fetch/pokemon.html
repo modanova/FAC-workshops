@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Real world fetch</title>
+    <style>
+        * {
+            font-family:  cursive;            
+        }
+    </style>
+    <body class="w3-center w3-yellow">
+    <h1>Pokemon search</h1>
+    <form class="form">
+      <label for="pokemon">Pokemon Name</label>
+      <input type="search" id="pokemon" name="name">
+      <button class="submit" type="submit">Search</button>
+     </form>
+     <h2 class="pokename"></h2>
+     <img width="200px" class="pokepic" src="">
+    
+    </body>
+   
+    <script>
+        const myForm = document.querySelector(".form");
+
+        myForm.addEventListener("submit", event => {
+            event.preventDefault();
+            let pokemon = document.querySelector("#pokemon").value;
+            
+            fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`, {
+            method: 'GET',
+            headers: { "content-type": "application/json" }
+            })
+            .then((response) => {
+            if(!response.ok) {
+                let err = new Error(response.status);
+                throw err;
+            }
+            return response.json();
+            })
+            .then((pokemon) => {
+                if(pokemon)
+                    document.querySelector(".pokename").innerHTML = pokemon.name;
+                    document.querySelector(".pokepic").src = pokemon.sprites['front_default']; 
+            })
+        })
+    </script>
+
+  </head>
