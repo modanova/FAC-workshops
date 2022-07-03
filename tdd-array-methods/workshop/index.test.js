@@ -169,21 +169,25 @@ console.groupEnd('Testing reduce()');
 
 // testing flat
 
-// test("flat() should take an array and return an array", () => {
-//   const result = flat([1, 2, 3], 1);
-//   equal(Array.isArray(result), true);
-// });
+test("flat() should take an array and return an array", () => {
+  const result = flat([1, 2, 3], 1);
+  equal(Array.isArray(result), true);
+});
 
-// test("flat() should turn a nested array into a single-level array", () => {
-//   const result = flat([[[1]], [2], 3], 1);
-//   const expected = Array.isArray([1])
-//   equal(Array.isArray(result[0]), expected);
-// });
+test("flat() should turn a nested array into a single-level array", () => {
+  const result = flat([[[1]], [2], 3], 1);
+  const expected = Array.isArray([1])
+  equal(Array.isArray(result[0]), expected);
+});
 
-// test("flat() should turn a nested array into a two-level array", () => {
-//   const result = flat([[[1]], [2], 3], 1);
-//   const expected = Array.isArray([1]);
-//   equal(Array.isArray(result[0]), expected);
-// });
+test("flat() should turn a nested array into a flat array", () => {
+  const result = flat([[[1]], [2], 3], Infinity);
+  const expected = !Array.isArray(1);
+  equal(!Array.isArray(result[0]), expected);
+});
 
-
+test("flat() should turn a three-level nested array into a two-level nested array", () => {
+  const result = flat([[[1, [2]], [3]], 4], 2);
+  const expected = !Array.isArray(1);
+  equal(!Array.isArray(result[0]), expected);
+});
