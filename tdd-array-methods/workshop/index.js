@@ -69,17 +69,13 @@ const takeNestedEl = (elem) => {
   return newArr;
 };
 
-const flat = (array, depth) => {
-  let level = 1;
-  let flat = [];
-  flat.push(array);
-
-  const flatOne = (arr) => {
+const flat = (arr, depth) => {
     let flatArr = [];
     for (elem of arr) {
       // if elem is an array
-      if (Array.isArray(elem)) {
-        for (el of elem) {
+      if (Array.isArray(elem) && depth > 0) {
+        let newElem = flat(elem, depth - 1);
+        for (el of newElem) {
           flatArr.push(el);
         }
       } else {
@@ -88,11 +84,4 @@ const flat = (array, depth) => {
       }
     }
     return flatArr;
-  };
-
-  while (level < depth) {
-    flat.push(flatOne(flat));
-    level++;
-  }
-  return flat;
 };
