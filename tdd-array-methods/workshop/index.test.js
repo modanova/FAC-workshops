@@ -187,7 +187,25 @@ test("flat() should turn a nested array into a flat array", () => {
 });
 
 test("flat() should turn a three-level nested array into a two-level nested array", () => {
-  const result = flat([[[1, [2]], [3]], 4], 2);
-  const expected = !Array.isArray(1);
+  let result = flat([[[1, [2]], [3]], 4], 2);
+  let expected = !Array.isArray(1);
+  equal(!Array.isArray(result[0]), expected);
+  
+  result = flat([[[1, [2]], [3]], 4], 1);
+  expected = !Array.isArray([1]);
   equal(!Array.isArray(result[0]), expected);
 });
+
+test("flat() should work with empty (nested) array ", () => {
+  let result = flat([], Infinity);
+  let expected = !Array.isArray(1);
+  equal(!Array.isArray(result[0]), expected);
+
+  result = flat([1, [[], 2], 3], Infinity);
+  expected = !Array.isArray(1);
+  equal(!Array.isArray(result[0]), expected);
+});
+
+
+
+
